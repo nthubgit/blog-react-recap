@@ -1,7 +1,6 @@
 import express from "express";
 import { db, connectToDb } from "./db.js";
 
-
 const app = express();
 app.use(express.json());
 
@@ -13,6 +12,7 @@ app.get("/api/articles/:name", async (req, res) => {
   const article = await db.collection("articles").findOne({ name });
 
   if (article) {
+    // res.header("Access-Control-Allow-Origin", "*")
     res.json(article);
   } else {
     res.sendStatus(404);
