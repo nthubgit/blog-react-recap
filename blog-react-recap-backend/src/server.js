@@ -12,7 +12,7 @@ app.get("/api/articles/:name", async (req, res) => {
   const article = await db.collection("articles").findOne({ name });
 
   if (article) {
-    res.header("Access-Control-Allow-Origin", "*")
+    // res.header("Access-Control-Allow-Origin", "*")
     res.json(article);
   } else {
     res.sendStatus(404);
@@ -31,7 +31,7 @@ app.get("/api/articles/:name", async (req, res) => {
 //   res.send(`Greetings, ${name}!!`);
 // });
 
-//Upvote
+//Upvotes
 
 app.put("/api/articles/:name/upvote", async (req, res) => {
   const { name } = req.params;
@@ -44,7 +44,7 @@ app.put("/api/articles/:name/upvote", async (req, res) => {
   const article = await db.collection('articles').findOne({name});
 
   if (article) {
-    res.send(`The ${name} article now has ${article.upvotes} upvotes. Dag yo!`);
+    res.json(article);
   } else {
     res.send("That article doesn't exist.");
   }
