@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import CommentsList from "../components/CommentsList";
 import axios from "axios";
 import articles from "./article-content";
+import AddCommentsForm from "../components/AddCommentsForm";
 import NotFoundPage from "./404";
 
 const ArticlePage = () => {
@@ -14,15 +15,13 @@ const ArticlePage = () => {
 
   useEffect(() => {
     const loadArticleInfo = async () => {
-      const response = await axios.get(
-        `/api/articles/${articleId}`
-      );
+      const response = await axios.get(`/api/articles/${articleId}`);
       const newArticleInfo = response.data;
       setArticleInfo(newArticleInfo);
     };
 
     loadArticleInfo();
-  }, []);
+  }, [articleId]);
 
   const article = articles.find((article) => article.name === articleId);
 
@@ -46,7 +45,11 @@ const ArticlePage = () => {
       {article.content.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>
       ))}
-      <CommentsList comments={articleInfo.comments}></CommentsList>
+      <AddCommentsForm
+        articleName={articleId}
+        onArticleUpdated={(updatedArticle) => setArticleInfo(updatedArticle)}
+      />
+      <CommentsList comments={articleInfo.comments} />
     </div>
   );
 };
